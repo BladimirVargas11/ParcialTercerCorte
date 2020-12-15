@@ -23,9 +23,9 @@ namespace Presentacion
         {
             InitializeComponent();
             //TextoArchivo.ReadOnly = true;
-            CargarSedes();
-            var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            sedeService = new SedeService(connectionString);
+            sedeService = new SedeService(ConfigConnection.connectionString);
+            //CargarSedes(); 
+            
 
         }
 

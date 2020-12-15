@@ -12,16 +12,13 @@ namespace Logica
     {
 
         private readonly ConnectionManager connection;
-        private  SedeRepository sedeRepository;
-
-  
+        private readonly SedeRepository sedeRepository;
 
         public SedeService(string connectionString)
         {
             connection = new ConnectionManager(connectionString);
             sedeRepository = new SedeRepository(connection);
         }
-
         public ConsultaSedeResponse ConsultaSede()
         {
             ConsultaSedeResponse respuesta = new ConsultaSedeResponse();

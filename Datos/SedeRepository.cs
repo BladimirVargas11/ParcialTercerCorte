@@ -34,7 +34,6 @@ namespace Datos
                         if (!dataReader.HasRows) return null;
 
                         Sede sede = new Sede();
-
                         sede.Id = (string)dataReader["id"];
                         sede.Nombre = (string)dataReader["nombre"];
 

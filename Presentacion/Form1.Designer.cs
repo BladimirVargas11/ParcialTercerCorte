@@ -31,7 +31,7 @@
             this.BotonAbrir = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.label3 = new System.Windows.Forms.Label();
-            this.ComboSede = new System.Windows.Forms.ComboBox();
+            this.ComboIps = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -60,13 +60,13 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "IPS:";
             // 
-            // ComboSede
+            // ComboIps
             // 
-            this.ComboSede.FormattingEnabled = true;
-            this.ComboSede.Location = new System.Drawing.Point(151, 36);
-            this.ComboSede.Name = "ComboSede";
-            this.ComboSede.Size = new System.Drawing.Size(121, 21);
-            this.ComboSede.TabIndex = 6;
+            this.ComboIps.FormattingEnabled = true;
+            this.ComboIps.Location = new System.Drawing.Point(151, 36);
+            this.ComboIps.Name = "ComboIps";
+            this.ComboIps.Size = new System.Drawing.Size(121, 21);
+            this.ComboIps.TabIndex = 6;
             // 
             // dataGridView1
             // 
@@ -85,7 +85,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(796, 403);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.ComboSede);
+            this.Controls.Add(this.ComboIps);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.BotonAbrir);
             this.Name = "Form1";
@@ -101,7 +101,7 @@
         private System.Windows.Forms.Button BotonAbrir;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox ComboSede;
+        private System.Windows.Forms.ComboBox ComboIps;
         private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

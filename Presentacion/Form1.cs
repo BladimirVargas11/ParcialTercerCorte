@@ -17,7 +17,7 @@ namespace Presentacion
     {
         
 
-        private List<Servicio> listaServicio;
+        
         private List<Ips> listaIps;
 
         private IpsService ipsService;
@@ -29,34 +29,77 @@ namespace Presentacion
             
             ipsService = new IpsService(ConfigConnection.connectionString);
             servicioBdService = new ServicioBdService(ConfigConnection.connectionString);
-            CargarSedes(); 
+            CargarIps(); 
             
 
         }
 
         private void BotonAbrir_Click(object sender, EventArgs e)
         {
-            
-            if (openFileDialog1.ShowDialog() == DialogResult.OK && openFileDialog1.FileName != null)
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK && openFileDialog1.FileName != null && !ComboIps.Text.Equals(""))
             {
                 var fileStream = openFileDialog1.OpenFile();
                 servicioService = new ServicioService(fileStream);
+                string Ruta = fileStream.ToString();
                 var respuesta = servicioService.Consultar();
                 if (respuesta.Error)
                 {
-                    MessageBox.Show("NO se ha podido mostrar los datos en la tabla, Verifique Su Archivo");
+                    MessageBox.Show("No se ha podido mostrar los datos en la tabla, Verifique Su Archivo");
                 }
                 else {
-                    ValidarDatos(respuesta.listaServicio);
-                    dataGridView1.DataSource = respuesta.listaServicio;
+                    ValidarDatos(respuesta.listaServicio, Ruta);
+                    //dataGridView1.DataSource = respuesta.listaServicio;
                 }
-                
-                
+
+
+            }
+            else {
+
+                MessageBox.Show("No se ha podido mostrar los datos en la tabla");
             }
         }
-        public void ValidarDatos(Servicio servicio) { 
-        
-        
+        public bool ValidarDatos(List<Servicio> servicios,String ruta ) {
+            Ips ips = ObtenerIps();
+            int contadorOk = 0;
+            int contadorError = 0;
+            if (ips != null)
+            {
+                foreach (var item in servicios) {
+                    if (item.IdIPS.Equals(ips.IdIPS))
+                    {
+                        contadorOk++;
+                    }
+                    else {
+                        contadorError++;
+                    }
+                }
+
+            }
+            else {
+                MessageBox.Show("No se ha podido encontrar los datos de las IPS.");
+                return false;
+            }
+            MessageBox.Show("Los Datos correctos son: "+contadorOk+"/nLos Datos Incorrectos son: "+contadorError +"/nSu ruta es:"+ruta,"INFORMACION SOBRE EL ARCHIVO");
+            if (contadorError == 0)
+            {
+                return true;
+            }
+            else {
+                return false;
+            }
+
+        }
+        public Ips ObtenerIps() {
+            foreach (var item in listaIps)
+            {
+                if (ComboIps.Text.Equals(item.NombreIPS))
+                {
+                    return item;
+                }
+
+            }
+            return null;
         }
         public void Guardar(List<Servicio> liquidaciones) {
 
@@ -68,7 +111,7 @@ namespace Presentacion
             }
         }
 
-        private void CargarSedes() {
+        private void CargarIps() {
             
             var response = ipsService.ConsultaIps();
             listaIps = response.ListaIps;
@@ -76,7 +119,7 @@ namespace Presentacion
            
             foreach (var item in listaIps) {
 
-                ComboSede.Items.Add(item.NombreIPS);
+                ComboIps.Items.Add(item.NombreIPS);
             }
 
 

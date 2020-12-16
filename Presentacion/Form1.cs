@@ -18,6 +18,7 @@ namespace Presentacion
         
 
         private List<Servicio> listaServicio;
+        private List<Ips> listaIps;
 
         private IpsService ipsService;
         private ServicioService servicioService;
@@ -59,20 +60,20 @@ namespace Presentacion
             foreach (var item in liquidaciones)
             {
                  
-                MessageBox.Show(liquidacionBaseDeDatosService.Guardar(item));
+                MessageBox.Show(servicioBdService.Guardar(item));
                 
             }
         }
 
         private void CargarSedes() {
             
-            var response = sedeService.ConsultaSede();
-            List<Ips> sedes = response.Sedes;
+            var response = ipsService.ConsultaIps();
+             listaIps = response.ListaIps;
             
            
-            foreach (var item in sedes) {
+            foreach (var item in listaIps) {
 
-                ComboSede.Items.Add(item.Nombre);
+                ComboSede.Items.Add(item.NombreIPS);
             }
 
 

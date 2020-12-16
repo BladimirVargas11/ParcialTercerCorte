@@ -19,7 +19,7 @@ namespace Logica
             connection = new ConnectionManager(connectionString);
             ipsRepository = new IpsRepository(connection);
         }
-        public ConsultaIpsResponse ConsultaSede()
+        public ConsultaIpsResponse ConsultaIps()
         {
             ConsultaIpsResponse respuesta = new ConsultaIpsResponse();
             try

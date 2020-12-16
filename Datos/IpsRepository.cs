@@ -19,7 +19,7 @@ namespace Datos
             _connection = connection._conexion;
 
         }
-        public List<Ips> ConsultarSedes()
+        public List<Ips> ConsultarIps()
         {
             SqlDataReader dataReader;
             listaIps.Clear();

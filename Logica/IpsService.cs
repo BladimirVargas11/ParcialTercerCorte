@@ -25,7 +25,7 @@ namespace Logica
             try
             {
                 connection.Open();
-                respuesta.ListaIps = ipsRepository.ConsultarSedes();
+                respuesta.ListaIps = ipsRepository.ConsultarIps();
                 if (respuesta.ListaIps.Count > 0)
                 {
                     respuesta.Message = "Se consultan los Datos";

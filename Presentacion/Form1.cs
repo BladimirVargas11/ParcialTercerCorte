@@ -19,7 +19,8 @@ namespace Presentacion
 
         
         private List<Ips> listaIps;
-
+        private List<Laboratorio> listaLaboratorio;
+        private LaboratorioService laboratorioService;
         private IpsService ipsService;
         private ServicioService servicioService;
         private ServicioBdService servicioBdService;
@@ -41,15 +42,18 @@ namespace Presentacion
             {
                 var fileStream = openFileDialog1.OpenFile();
                 servicioService = new ServicioService(fileStream);
-                string Ruta = fileStream.ToString();
+                string Ruta = openFileDialog1.FileName.ToString();
                 var respuesta = servicioService.Consultar();
                 if (respuesta.Error)
                 {
                     MessageBox.Show("No se ha podido mostrar los datos en la tabla, Verifique Su Archivo");
                 }
                 else {
-                    ValidarDatos(respuesta.listaServicio, Ruta);
-                    //dataGridView1.DataSource = respuesta.listaServicio;
+                    if (ValidarDatos(respuesta.listaServicio, Ruta)) {
+
+                        dataGridView1.DataSource = respuesta.listaServicio;
+                    }
+                    
                 }
 
 
@@ -80,7 +84,7 @@ namespace Presentacion
                 MessageBox.Show("No se ha podido encontrar los datos de las IPS.");
                 return false;
             }
-            MessageBox.Show("Los Datos correctos son: "+contadorOk+"/nLos Datos Incorrectos son: "+contadorError +"/nSu ruta es:"+ruta,"INFORMACION SOBRE EL ARCHIVO");
+            MessageBox.Show("Los Datos correctos son: "+contadorOk+ "\nLos Datos Incorrectos son: " + contadorError + "\nSu ruta es:" + ruta,"INFORMACION SOBRE EL ARCHIVO");
             if (contadorError == 0)
             {
                 return true;
@@ -110,7 +114,10 @@ namespace Presentacion
                 
             }
         }
-
+        private void CargarLaboratorio() {
+            var response = laboratorioService.ConsultaLaboratorio();
+            listaLaboratorio = response.ListaLaboratorio;
+        }
         private void CargarIps() {
             
             var response = ipsService.ConsultaIps();

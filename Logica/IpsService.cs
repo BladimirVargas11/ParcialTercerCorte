@@ -8,25 +8,25 @@ using Entidad;
 
 namespace Logica
 {
-    public class SedeService
+    public class IpsService
     {
 
         private readonly ConnectionManager connection;
-        private readonly SedeRepository sedeRepository;
+        private readonly IpsRepository ipsRepository;
 
-        public SedeService(string connectionString)
+        public IpsService(string connectionString)
         {
             connection = new ConnectionManager(connectionString);
-            sedeRepository = new SedeRepository(connection);
+            ipsRepository = new IpsRepository(connection);
         }
-        public ConsultaSedeResponse ConsultaSede()
+        public ConsultaIpsResponse ConsultaSede()
         {
-            ConsultaSedeResponse respuesta = new ConsultaSedeResponse();
+            ConsultaIpsResponse respuesta = new ConsultaIpsResponse();
             try
             {
                 connection.Open();
-                respuesta.Sedes = sedeRepository.ConsultarSedes();
-                if (respuesta.Sedes.Count > 0)
+                respuesta.ListaIps = ipsRepository.ConsultarSedes();
+                if (respuesta.ListaIps.Count > 0)
                 {
                     respuesta.Message = "Se consultan los Datos";
                 }
@@ -45,44 +45,44 @@ namespace Logica
             finally { connection.Close(); }
         }
     }
-    public class SedeResponse
+    public class IpsResponse
     {
-        public Sede Sede { get; set; }
+        public Ips Ips { get; set; }
         public string Message { get; set; }
-        public bool SedeEncontrada { get; set; }
+        public bool IpsEncontrada { get; set; }
 
-        public SedeResponse(Sede sede)
+        public IpsResponse(Ips sede)
         {
-            Sede = new Sede();
-            Sede = sede;
-            SedeEncontrada = true;
+            Ips = new Ips();
+            Ips = sede;
+            IpsEncontrada = true;
         }
-        public SedeResponse(string message)
+        public IpsResponse(string message)
         {
             Message = message;
-            SedeEncontrada = false;
+            IpsEncontrada = false;
         }
     }
 
-    public class ConsultaSedeResponse
+    public class ConsultaIpsResponse
     {
-        public List<Sede> Sedes { get; set; }
+        public List<Ips> ListaIps { get; set; }
         public string Message { get; set; }
-        public bool SedeEncontrada { get; set; }
-        public ConsultaSedeResponse()
+        public bool IpsEncontrada { get; set; }
+        public ConsultaIpsResponse()
         {
 
         }
-        public ConsultaSedeResponse(List<Sede> sedes)
+        public ConsultaIpsResponse(List<Ips> listaIps)
         {
-            Sedes = new List<Sede>();
-            Sedes = sedes;
-            SedeEncontrada = true;
+            ListaIps = new List<Ips>();
+            ListaIps = listaIps;
+            IpsEncontrada = true;
         }
-        public ConsultaSedeResponse(string message)
+        public ConsultaIpsResponse(string message)
         {
             Message = message;
-            SedeEncontrada = false;
+            IpsEncontrada = false;
         }
     }
 }

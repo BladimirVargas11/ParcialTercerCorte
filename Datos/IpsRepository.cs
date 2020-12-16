@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,22 +10,22 @@ using Entidad;
 
 namespace Datos
 {
-    public class SedeRepository
+    public class IpsRepository
     {
         private readonly SqlConnection _connection;
-        private List<Sede> Sedes = new List<Sede>();
-        public SedeRepository(ConnectionManager connection)
+        private List<Ips> listaIps = new List<Ips>();
+        public IpsRepository(ConnectionManager connection)
         {
             _connection = connection._conexion;
 
         }
-        public List<Sede> ConsultarSedes()
+        public List<Ips> ConsultarSedes()
         {
             SqlDataReader dataReader;
-            Sedes.Clear();
+            listaIps.Clear();
             using (var command = _connection.CreateCommand())
             {
-                command.CommandText = "Select * from sede";
+                command.CommandText = "Select * from ips";
                 dataReader = command.ExecuteReader();
                 if (dataReader.HasRows)
                 {
@@ -33,15 +33,15 @@ namespace Datos
                     {
                         if (!dataReader.HasRows) return null;
 
-                        Sede sede = new Sede();
-                        sede.Id = (string)dataReader["id"];
-                        sede.Nombre = (string)dataReader["nombre"];
+                        Ips ips = new Ips();
+                        ips.IdIPS = (string)dataReader["IdIPS"];
+                        ips.NombreIPS = (string)dataReader["NombreIPS"];
 
-                        Sedes.Add(sede);
+                        listaIps.Add(ips);
                     }
                 }
             }
-            return Sedes;
+            return listaIps;
         }
 
     }

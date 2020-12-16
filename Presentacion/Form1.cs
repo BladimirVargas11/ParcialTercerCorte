@@ -17,14 +17,18 @@ namespace Presentacion
     {
         
 
-        public List<Sede> sedes;
-        private SedeService sedeService;
+        private List<Servicio> listaServicio;
+
+        private IpsService ipsService;
+        private ServicioService servicioService;
+        private ServicioBdService servicioBdService;
         public Form1()
         {
             InitializeComponent();
             //TextoArchivo.ReadOnly = true;
-            sedeService = new SedeService(ConfigConnection.connectionString);
-            //CargarSedes(); 
+            ipsService = new IpsService(ConfigConnection.connectionString);
+            servicioBdService = new ServicioBdService(ConfigConnection.connectionString);
+            CargarSedes(); 
             
 
         }
@@ -34,22 +38,41 @@ namespace Presentacion
             
             if (openFileDialog1.ShowDialog() == DialogResult.OK && openFileDialog1.FileName != null)
             {
-                //string file = openFileDialog1.FileName;
-                //string mensaje = ProductoSedeService.Guardar(file); // Crear la clase ProductoSedeService y el método guardar
-                //MessageBox.Show(mensaje);
-                ///TextoArchivo.Text = openFileDialog1.FileName;
+                var fileStream = openFileDialog1.OpenFile();
+                servicioService = new ServicioService(fileStream);
+                var respuesta = servicioService.Consultar();
+                if (respuesta.Error)
+                {
+                    MessageBox.Show("NO SE HA PODIDO PINTAR EN LA TABLA");
+                }
+                else {
+                    dataGridView1.DataSource = respuesta.listaLiquidacion;
+                    listaServicio = respuesta.listaLiquidacion;
+                    Guardar(respuesta.listaLiquidacion);
+                }
+                
+                
+            }
+        }
+        public void Guardar(List<Servicio> liquidaciones) {
+
+            foreach (var item in liquidaciones)
+            {
+                 
+                MessageBox.Show(liquidacionBaseDeDatosService.Guardar(item));
+                
             }
         }
 
         private void CargarSedes() {
             
             var response = sedeService.ConsultaSede();
-            List<Sede> sedes = response.Sedes;
+            List<Ips> sedes = response.Sedes;
             
            
             foreach (var item in sedes) {
 
-                ComboSede.Text = item.Id;
+                ComboSede.Items.Add(item.Nombre);
             }
 
 

@@ -42,20 +42,46 @@ namespace Logica
                 finally { connection.Close(); }
             
         }
+        public ServicioResponse ConsultarTodos(String tipo,string id)
+        {
+            ServicioResponse respuesta = new ServicioResponse();
+            try
+            {
 
+                connection.Open();
+                respuesta.servicios = servicioBdRepository.Consultas(tipo, id);
+                connection.Close();
+                if (respuesta.servicios.Count > 0)
+                {
+                    respuesta.Message = "Se consultan los Datos";
+                }
+                else
+                {
+                    respuesta.Message = "No hay datos para consultar";
+                }
 
+                return respuesta;
+            }
+            catch (Exception e)
+            {
+                respuesta.Message = $"Error de la Aplicacion: {e.Message}";
 
+                return respuesta;
+            }
+            finally { connection.Close(); }
+
+        }
     }
+
+    
+
     public class ServicioResponse
     {
 
         public string Message { get; set; }
         public bool Error { get; set; }
-        public ServicioResponse(string message)
-        {
-            Message = message;
-            Error = false;
-        }
+        public List<Servicio> servicios { get; set; }
+
         public ServicioResponse()
         {
 

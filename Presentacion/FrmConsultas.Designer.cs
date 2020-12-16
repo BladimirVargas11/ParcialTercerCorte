@@ -37,9 +37,9 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(92, 104);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 103);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(536, 238);
+            this.dataGridView1.Size = new System.Drawing.Size(750, 316);
             this.dataGridView1.TabIndex = 0;
             // 
             // comboBox1
@@ -66,6 +66,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "Consultar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // FrmConsultas
             // 

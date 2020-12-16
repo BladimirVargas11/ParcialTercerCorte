@@ -190,5 +190,11 @@ namespace Presentacion
         {
             Guardar();
         }
+
+        private void BotonConsultar_Click(object sender, EventArgs e)
+        {
+            FrmConsultas frmConsultas = new FrmConsultas(listaIps,listaLaboratorio);
+            frmConsultas.Show();
+        }
     }
 }

@@ -49,7 +49,7 @@ namespace Datos
             writer.WriteLine($"{servicio.IdIPS};{servicio.Identificacion};{servicio.NombrePaciente};{servicio.IdLaboratorio};{"EL VALOR ES: "+valor}  ");
             writer.Close();
             file.Close();
-            return FileStream.ToString();
+            return file.ToString();
 
         }
 

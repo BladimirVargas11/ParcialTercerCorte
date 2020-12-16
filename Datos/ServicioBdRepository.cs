@@ -13,7 +13,7 @@ namespace Datos
     public class ServicioBdRepository
     {
         private readonly SqlConnection _connection;
-        private List<Servicio> listaLiquidacion = new List<Servicio>();
+        private List<Servicio> listaServicio = new List<Servicio>();
 
         public ServicioBdRepository(ConnectionManager connection)
         {
@@ -25,8 +25,8 @@ namespace Datos
         {
             using (var command = _connection.CreateCommand())
             {
-                command.CommandText = @"INSERT INTO liquidacion(IdIPS, Identificacion, NombrePaciente, IdLaboratorio, ValorLaboratorio)
-                                        Values (@IdSede,@IdEmpleado,@NombreEmpleado,@HorasTrabajadas,@Periodo,@Vigencia,@Valor)";
+                command.CommandText = @"INSERT INTO servicio(IdIPS, Identificacion, NombrePaciente, IdLaboratorio, ValorLaboratorio)
+                                        Values (@IdIPS,@Identificacion,@NombrePaciente,@IdLaboratorio,@ValorLaboratorio)";
                 command.Parameters.AddWithValue("@IdIPS", servicio.IdIPS);
                 command.Parameters.AddWithValue("@Identificacion", servicio.Identificacion);
                 command.Parameters.AddWithValue("@NombrePaciente", servicio.NombrePaciente);
@@ -37,6 +37,34 @@ namespace Datos
 
             }
 
+        }
+        public List<Servicio> ConsultarServicio()
+        {
+            SqlDataReader dataReader;
+            listaServicio.Clear();
+            using (var command = _connection.CreateCommand())
+            {
+                command.CommandText = "Select * from ips";
+                dataReader = command.ExecuteReader();
+                if (dataReader.HasRows)
+                {
+                    while (dataReader.Read())
+                    {
+                        if (!dataReader.HasRows) return null;
+
+                        Servicio servicio = new Servicio();
+                        servicio.IdIPS = (string)dataReader["IdIPS"];
+                        servicio.Identificacion = (string)dataReader["Identificacion"];
+                        servicio.NombrePaciente = (string)dataReader["NombrePaciente"];
+                        servicio.IdLaboratorio = (string)dataReader["IdLaboratorio"];
+                        servicio.ValorLaboratorio = (decimal)dataReader["ValorLaboratorio"];
+                        
+
+                        listaServicio.Add(servicio);
+                    }
+                }
+            }
+            return listaServicio;
         }
 
     }

@@ -34,6 +34,7 @@
             this.ComboIps = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.BotonGuardar = new System.Windows.Forms.Button();
+            this.BotonConsultar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,11 +91,21 @@
             this.BotonGuardar.UseVisualStyleBackColor = true;
             this.BotonGuardar.Click += new System.EventHandler(this.BotonGuardar_Click);
             // 
+            // BotonConsultar
+            // 
+            this.BotonConsultar.Location = new System.Drawing.Point(693, 39);
+            this.BotonConsultar.Name = "BotonConsultar";
+            this.BotonConsultar.Size = new System.Drawing.Size(75, 23);
+            this.BotonConsultar.TabIndex = 9;
+            this.BotonConsultar.Text = "Consultar";
+            this.BotonConsultar.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(796, 414);
+            this.Controls.Add(this.BotonConsultar);
             this.Controls.Add(this.BotonGuardar);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.ComboIps);
@@ -116,6 +127,7 @@
         private System.Windows.Forms.ComboBox ComboIps;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button BotonGuardar;
+        private System.Windows.Forms.Button BotonConsultar;
     }
 }
 

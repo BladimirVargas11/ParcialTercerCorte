@@ -34,7 +34,7 @@ namespace Logica
                 return respuesta;
             }
         }
-        public String GuarGuardarServicioArchivodar(Servicio servicio, decimal valorReal)
+        public String GuardarArchivo(Servicio servicio, decimal valorReal)
         {
             try
             {

@@ -15,3 +15,5 @@ insert into laboratorios values('1002','Coprologico',5000)
 insert into laboratorios values('1003','Glicemia',25000)
 insert into laboratorios values('1004','Trigliceridos',8000)
 select * from laboratorios
+
+select * from servicio

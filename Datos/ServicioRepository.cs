@@ -41,7 +41,7 @@ namespace Datos
 
             return listaServicio;
         }
-        private readonly string FileName = "Persona.txt";
+        private readonly string FileName = "LOG.txt";
         public String Guardar(Servicio servicio, decimal valor)
         {
             FileStream file = new FileStream(FileName, FileMode.Append);

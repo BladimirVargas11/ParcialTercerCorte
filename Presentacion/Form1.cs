@@ -15,9 +15,9 @@ namespace Presentacion
 {
     public partial class Form1 : Form
     {
-        
 
-        
+
+
         private List<Ips> listaIps;
         private List<Laboratorio> listaLaboratorio;
         private List<Servicio> listaServicio;
@@ -28,14 +28,14 @@ namespace Presentacion
         public Form1()
         {
             InitializeComponent();
-            
+
             ipsService = new IpsService(ConfigConnection.connectionString);
             servicioBdService = new ServicioBdService(ConfigConnection.connectionString);
             laboratorioService = new LaboratorioService(ConfigConnection.connectionString);
             CargarIps();
             CargarLaboratorio();
             BotonGuardar.Enabled = false;
-            
+
 
         }
 
@@ -78,7 +78,7 @@ namespace Presentacion
                 }
             }
         }
-        
+
         public bool ValidarDatosIps(List<Servicio> servicios) {
             Ips ips = ObtenerIps();
             int contadorOk = 0;
@@ -124,25 +124,27 @@ namespace Presentacion
 
             int contadorOk = 0;
             int contadorError = 0;
+            String mensajeRuta = "";
             foreach (var item in listaServicio)
             {
                 if (ValorLaboratorio(item.IdLaboratorio, item.ValorLaboratorio))
                 {
-                    servicioBdService.GuardarServicio(item);
+                     servicioBdService.GuardarServicio(item);
                     contadorOk++;
                 }
                 else {
-                    servicioService.GuardarServicioArchivo(item);
+                    decimal valor= ValorRealLaboratorio(item.IdLaboratorio);
+                     mensajeRuta = servicioService.GuardarArchivo(item, valor );
                     contadorError++;
                 }
             }
             if (contadorError > 0)
             {
-                MessageBox.Show("Los Datos correctos son: " + contadorOk + "\nLos Datos Incorrectos son: " + contadorError + "\nVerifiqueLaRuta:" , "INFORMACION SOBRE EL ARCHIVO");
+                MessageBox.Show("Los Datos correctos son: " + contadorOk + "\nLos Datos Incorrectos son: " + contadorError + "\nVerifiqueLaRuta:"+ mensajeRuta, "INFORMACION SOBRE EL ARCHIVO");
 
             }
             else {
-                MessageBox.Show("Se han guardado todos los datos satisfactoriamente","INFORMACION SOBRE EL ARCHIVO");
+                MessageBox.Show("Se han guardado todos los datos satisfactoriamente", "INFORMACION SOBRE EL ARCHIVO");
             }
         }
         private bool ValorLaboratorio(String id, decimal valor) {
@@ -154,6 +156,17 @@ namespace Presentacion
                 }
             }
             return false;
+        }
+        private decimal ValorRealLaboratorio(String id)
+        {
+            foreach (var item in listaLaboratorio)
+            {
+                if (id.Equals(item.IdLaboratorios))
+                {
+                    return item.ValorLaboratorio; 
+                }
+            }
+            return 0;
         }
         private void CargarLaboratorio() {
             var response = laboratorioService.ConsultaLaboratorio();

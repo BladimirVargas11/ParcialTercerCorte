@@ -20,6 +20,7 @@ namespace Presentacion
         
         private List<Ips> listaIps;
         private List<Laboratorio> listaLaboratorio;
+        private List<Servicio> listaServicio;
         private LaboratorioService laboratorioService;
         private IpsService ipsService;
         private ServicioService servicioService;
@@ -30,40 +31,55 @@ namespace Presentacion
             
             ipsService = new IpsService(ConfigConnection.connectionString);
             servicioBdService = new ServicioBdService(ConfigConnection.connectionString);
-            CargarIps(); 
+            laboratorioService = new LaboratorioService(ConfigConnection.connectionString);
+            CargarIps();
+            CargarLaboratorio();
+            BotonGuardar.Enabled = false;
             
 
         }
 
         private void BotonAbrir_Click(object sender, EventArgs e)
         {
-
-            if (openFileDialog1.ShowDialog() == DialogResult.OK && openFileDialog1.FileName != null && !ComboIps.Text.Equals(""))
+            if (ComboIps.Text.Equals(""))
             {
-                var fileStream = openFileDialog1.OpenFile();
-                servicioService = new ServicioService(fileStream);
-                string Ruta = openFileDialog1.FileName.ToString();
-                var respuesta = servicioService.Consultar();
-                if (respuesta.Error)
-                {
-                    MessageBox.Show("No se ha podido mostrar los datos en la tabla, Verifique Su Archivo");
-                }
-                else {
-                    if (ValidarDatos(respuesta.listaServicio, Ruta)) {
-
-                        dataGridView1.DataSource = respuesta.listaServicio;
-                    }
-                    
-                }
-
-
+                MessageBox.Show("Seleccione una IPS");
             }
-            else {
+            else
+            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK && openFileDialog1.FileName != null)
+                {
+                    var fileStream = openFileDialog1.OpenFile();
+                    servicioService = new ServicioService(fileStream);
+                    var respuesta = servicioService.Consultar();
+                    if (respuesta.Error)
+                    {
+                        MessageBox.Show("No se ha podido mostrar los datos en la tabla, Verifique Su Archivo");
+                    }
+                    else
+                    {
+                        if (ValidarDatosIps(respuesta.listaServicio))
+                        {
+                            listaServicio = respuesta.listaServicio;
+                            dataGridView1.DataSource = listaServicio;
+                            BotonGuardar.Enabled = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Datos no coinciden con el IPS seleccionado, Verifique los datos de su archivo");
+                        }
 
-                MessageBox.Show("No se ha podido mostrar los datos en la tabla");
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("No se ha podido mostrar los datos en la tabla");
+                }
             }
         }
-        public bool ValidarDatos(List<Servicio> servicios,String ruta ) {
+        
+        public bool ValidarDatosIps(List<Servicio> servicios) {
             Ips ips = ObtenerIps();
             int contadorOk = 0;
             int contadorError = 0;
@@ -84,7 +100,6 @@ namespace Presentacion
                 MessageBox.Show("No se ha podido encontrar los datos de las IPS.");
                 return false;
             }
-            MessageBox.Show("Los Datos correctos son: "+contadorOk+ "\nLos Datos Incorrectos son: " + contadorError + "\nSu ruta es:" + ruta,"INFORMACION SOBRE EL ARCHIVO");
             if (contadorError == 0)
             {
                 return true;
@@ -105,14 +120,40 @@ namespace Presentacion
             }
             return null;
         }
-        public void Guardar(List<Servicio> liquidaciones) {
+        public void Guardar() {
 
-            foreach (var item in liquidaciones)
+            int contadorOk = 0;
+            int contadorError = 0;
+            foreach (var item in listaServicio)
             {
-                 
-                MessageBox.Show(servicioBdService.Guardar(item));
-                
+                if (ValorLaboratorio(item.IdLaboratorio, item.ValorLaboratorio))
+                {
+                    servicioBdService.GuardarServicio(item);
+                    contadorOk++;
+                }
+                else {
+                    servicioService.GuardarServicioArchivo(item);
+                    contadorError++;
+                }
             }
+            if (contadorError > 0)
+            {
+                MessageBox.Show("Los Datos correctos son: " + contadorOk + "\nLos Datos Incorrectos son: " + contadorError + "\nVerifiqueLaRuta:" , "INFORMACION SOBRE EL ARCHIVO");
+
+            }
+            else {
+                MessageBox.Show("Se han guardado todos los datos satisfactoriamente","INFORMACION SOBRE EL ARCHIVO");
+            }
+        }
+        private bool ValorLaboratorio(String id, decimal valor) {
+            foreach (var item in listaLaboratorio) {
+                if (id.Equals(item.IdLaboratorios)) {
+                    if (valor == item.ValorLaboratorio) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
         private void CargarLaboratorio() {
             var response = laboratorioService.ConsultaLaboratorio();
@@ -130,6 +171,11 @@ namespace Presentacion
             }
 
 
+        }
+
+        private void BotonGuardar_Click(object sender, EventArgs e)
+        {
+            Guardar();
         }
     }
 }

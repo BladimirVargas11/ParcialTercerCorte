@@ -75,7 +75,7 @@ namespace Logica
         }
         public ConsultaLaboratorioResponse(List<Laboratorio> listaLaboratorio)
         {
-            ListaLaboratorio = new List<Ips>();
+            ListaLaboratorio = new List<Laboratorio>();
             ListaLaboratorio = listaLaboratorio;
             LaboratorioEncontrada = true;
         }

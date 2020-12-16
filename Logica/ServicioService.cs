@@ -34,6 +34,20 @@ namespace Logica
                 return respuesta;
             }
         }
+        public String GuarGuardarServicioArchivodar(Servicio servicio, decimal valorReal)
+        {
+            try
+            {
+
+                return ServicioRepository.Guardar(servicio, valorReal);
+                                
+            }
+            catch (Exception e)
+            {
+
+                return $"Error de la Aplicacion: {e.Message}";
+            }
+        }
 
 
     }

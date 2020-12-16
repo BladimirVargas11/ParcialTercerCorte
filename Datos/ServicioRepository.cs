@@ -41,5 +41,18 @@ namespace Datos
 
             return listaServicio;
         }
+        private readonly string FileName = "Persona.txt";
+        public String Guardar(Servicio servicio, decimal valor)
+        {
+            FileStream file = new FileStream(FileName, FileMode.Append);
+            StreamWriter writer = new StreamWriter(file);
+            writer.WriteLine($"{servicio.IdIPS};{servicio.Identificacion};{servicio.NombrePaciente};{servicio.IdLaboratorio};{"EL VALOR ES: "+valor}  ");
+            writer.Close();
+            file.Close();
+            return FileStream.ToString();
+
+        }
+
+
     }
 }

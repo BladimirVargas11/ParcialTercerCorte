@@ -12,33 +12,53 @@ namespace Logica
     {
 
         private readonly ConnectionManager connection;
-        private readonly ServicioBdRepository liquidacionBaseDeDatosRepository;
+        private readonly ServicioBdRepository servicioBdRepository;
 
         public ServicioBdService(string connectionString)
         {
             connection = new ConnectionManager(connectionString);
-            liquidacionBaseDeDatosRepository = new ServicioBdRepository(connection);
+            servicioBdRepository = new ServicioBdRepository(connection);
         }
 
-        public string Guardar(Servicio liquidacion)
+        public ServicioResponse GuardarServicio(Servicio servicio)
         {
-            {
+
+            ServicioResponse servicioResponse = new ServicioResponse();
                 try
                 {
                     connection.Open();
-                    liquidacionBaseDeDatosRepository.Guardar(liquidacion);
-                    
-                    return $"Se guardó la Correctamente la persona "+liquidacion.NombrePaciente;
-                }
+                    servicioBdRepository.Guardar(servicio);
+
+                    servicioResponse.Message= $"Se guardó la Correctamente la persona "+servicio.NombrePaciente;
+                    servicioResponse.Error = false;
+                    return servicioResponse;
+            }
                 catch (Exception e)
                 {
-                    return $"Error de la Aplicacion: {e.Message}"+"No se pudo Guardar a la persona: "+liquidacion.NombrePaciente;
+                    servicioResponse.Message = $"Error de la Aplicacion: {e.Message}"+"No se pudo Guardar a la persona: "+servicio.NombrePaciente;
+                    servicioResponse.Error = true;
+                    return servicioResponse;
                 }
                 finally { connection.Close(); }
-            }
+            
         }
 
 
 
+    }
+    public class ServicioResponse
+    {
+
+        public string Message { get; set; }
+        public bool Error { get; set; }
+        public ServicioResponse(string message)
+        {
+            Message = message;
+            Error = false;
+        }
+        public ServicioResponse()
+        {
+
+        }
     }
 }

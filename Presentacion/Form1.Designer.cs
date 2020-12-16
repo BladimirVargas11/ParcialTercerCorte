@@ -33,6 +33,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.ComboIps = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.BotonGuardar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,11 +80,22 @@
             this.dataGridView1.Size = new System.Drawing.Size(643, 243);
             this.dataGridView1.TabIndex = 7;
             // 
+            // BotonGuardar
+            // 
+            this.BotonGuardar.Location = new System.Drawing.Point(693, 379);
+            this.BotonGuardar.Name = "BotonGuardar";
+            this.BotonGuardar.Size = new System.Drawing.Size(75, 23);
+            this.BotonGuardar.TabIndex = 8;
+            this.BotonGuardar.Text = "Guardar";
+            this.BotonGuardar.UseVisualStyleBackColor = true;
+            this.BotonGuardar.Click += new System.EventHandler(this.BotonGuardar_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(796, 403);
+            this.ClientSize = new System.Drawing.Size(796, 414);
+            this.Controls.Add(this.BotonGuardar);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.ComboIps);
             this.Controls.Add(this.label3);
@@ -103,6 +115,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox ComboIps;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button BotonGuardar;
     }
 }
 

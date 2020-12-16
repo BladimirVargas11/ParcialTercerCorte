@@ -9,26 +9,27 @@ namespace Logica
 {
     public class ServicioService
     {
-        LiquidacionRepository LiquidacionRepository;
+        ServicioRepository ServicioRepository;
         public ServicioService(Stream fileStream)
         {
-            LiquidacionRepository = new LiquidacionRepository(fileStream);
+            ServicioRepository = new ServicioRepository(fileStream);
 
         }
 
-        public LiquidacionRespuesta Consultar()
+        public ServicioRespuesta Consultar()
         {
 
-            LiquidacionRespuesta respuesta = new LiquidacionRespuesta();
+            ServicioRespuesta respuesta = new ServicioRespuesta();
             try
             {
 
-                respuesta.listaLiquidacion = LiquidacionRepository.Consultar();
+                respuesta.listaServicio = ServicioRepository.Consultar();
                 respuesta.Error = false;
                 return respuesta;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                respuesta.Mensaje = "ERROR: " + e;
                 respuesta.Error = true;
                 return respuesta;
             }
@@ -36,9 +37,11 @@ namespace Logica
 
 
     }
-    public class LiquidacionRespuesta
+    public class ServicioRespuesta
     {
-        public List<Servicio> listaLiquidacion { get; set; }
+        public List<Servicio> listaServicio { get; set; }
         public bool Error { get; set; }
+
+        public String Mensaje { get; set; }
     }
 }

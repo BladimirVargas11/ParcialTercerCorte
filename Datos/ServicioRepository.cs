@@ -6,12 +6,12 @@ using Entidad;
 
 namespace Datos
 {
-    public class LiquidacionRepository
+    public class ServicioRepository
     {
         public Stream FileStream { get; set; }
         private List<Servicio> listaServicio = new List<Servicio>();
 
-        public LiquidacionRepository(Stream fileStream)
+        public ServicioRepository(Stream fileStream)
         {
             FileStream = fileStream;
         }
@@ -32,8 +32,7 @@ namespace Datos
                 servicio.Identificacion = datos[1];
                 servicio.NombrePaciente = datos[2];
                 servicio.IdLaboratorio = datos[3];
-                servicio.ValorLaboratorio = datos[4];
-                
+                servicio.ValorLaboratorio = decimal.Parse(datos[4]);
 
                 listaServicio.Add(servicio);
             }

@@ -28,11 +28,11 @@ namespace Logica
                     connection.Open();
                     liquidacionBaseDeDatosRepository.Guardar(liquidacion);
                     
-                    return $"Se guardó la Correctamente la persona "+liquidacion.NombreEmpleado;
+                    return $"Se guardó la Correctamente la persona "+liquidacion.NombrePaciente;
                 }
                 catch (Exception e)
                 {
-                    return $"Error de la Aplicacion: {e.Message}"+"No se pudo Guardar a la persona: "+liquidacion.NombreEmpleado;
+                    return $"Error de la Aplicacion: {e.Message}"+"No se pudo Guardar a la persona: "+liquidacion.NombrePaciente;
                 }
                 finally { connection.Close(); }
             }

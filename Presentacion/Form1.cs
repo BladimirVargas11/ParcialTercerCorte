@@ -26,7 +26,7 @@ namespace Presentacion
         public Form1()
         {
             InitializeComponent();
-            //TextoArchivo.ReadOnly = true;
+            
             ipsService = new IpsService(ConfigConnection.connectionString);
             servicioBdService = new ServicioBdService(ConfigConnection.connectionString);
             CargarSedes(); 
@@ -44,16 +44,19 @@ namespace Presentacion
                 var respuesta = servicioService.Consultar();
                 if (respuesta.Error)
                 {
-                    MessageBox.Show("NO SE HA PODIDO PINTAR EN LA TABLA");
+                    MessageBox.Show("NO se ha podido mostrar los datos en la tabla, Verifique Su Archivo");
                 }
                 else {
-                    dataGridView1.DataSource = respuesta.listaLiquidacion;
-                    listaServicio = respuesta.listaLiquidacion;
-                    Guardar(respuesta.listaLiquidacion);
+                    ValidarDatos(respuesta.listaServicio);
+                    dataGridView1.DataSource = respuesta.listaServicio;
                 }
                 
                 
             }
+        }
+        public void ValidarDatos(Servicio servicio) { 
+        
+        
         }
         public void Guardar(List<Servicio> liquidaciones) {
 
@@ -68,7 +71,7 @@ namespace Presentacion
         private void CargarSedes() {
             
             var response = ipsService.ConsultaIps();
-             listaIps = response.ListaIps;
+            listaIps = response.ListaIps;
             
            
             foreach (var item in listaIps) {

@@ -44,7 +44,7 @@ namespace Datos
             listaServicio.Clear();
             using (var command = _connection.CreateCommand())
             {
-                command.CommandText = "Select * from ips";
+                command.CommandText = "Select * from servicio";
                 dataReader = command.ExecuteReader();
                 if (dataReader.HasRows)
                 {
@@ -68,9 +68,11 @@ namespace Datos
         }
         public List<Servicio> Consultas(string nombre, String id) {
             if (nombre.Equals("Laboratorio Yesenia Ovalle") || nombre.Equals("Laboratorio Nacy Florez") || nombre.Equals("Laboratorio Cristiam Gram")) {
+                
                 return ConsultaIpsServicio(id);
             }
             else {
+
                 return ConsultaLaboratorioServicio(id);
             }
         
@@ -82,7 +84,7 @@ namespace Datos
         public List<Servicio> ConsultaLaboratorioServicio(String IdLaboratorio)
         {
 
-            return ConsultarServicio().Where(p => p.IdIPS.Equals(IdLaboratorio)).ToList();
+            return ConsultarServicio().Where(p => p.IdLaboratorio.Equals(IdLaboratorio)).ToList();
         }
 
     }

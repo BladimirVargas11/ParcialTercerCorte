@@ -58,6 +58,7 @@ namespace Presentacion
                     }
                     else
                     {
+                        dataGridView1.Rows.Clear();
                         if (ValidarDatosIps(respuesta.listaServicio))
                         {
                             listaServicio = respuesta.listaServicio;
@@ -121,7 +122,7 @@ namespace Presentacion
             return null;
         }
         public void Guardar() {
-
+            
             int contadorOk = 0;
             int contadorError = 0;
             String mensajeRuta = "";

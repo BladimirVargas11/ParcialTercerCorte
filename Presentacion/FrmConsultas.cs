@@ -45,28 +45,83 @@ namespace Presentacion
             
         }
         public void consultar() {
+            dataGridView1.Rows.Clear();
             if (comboBox1.Text.Equals("Laboratorio Yesenia Ovalle") || comboBox1.Text.Equals("Laboratorio Nacy Florez") || comboBox1.Text.Equals("Laboratorio Cristiam Gram"))
             {
-                Ips ips = new Ips();
-                dataGridView1.DataSource = servicioBdService.ConsultarTodos(comboBox1.Text, ips.IdIPS);
+                Ips ips = ObtenerIps();
+                var RESPUESTA = servicioBdService.ConsultarTodos(comboBox1.Text, ips.IdIPS);
+                PintarConIps(RESPUESTA.servicios, ips);
             }
             else {
-                Laboratorio laboratorio = new Laboratorio();
-                dataGridView1.DataSource = servicioBdService.ConsultarTodos(comboBox1.Text, laboratorio.IdLaboratorios);
-
+                Laboratorio laboratorio = ObtenerLaboratorio();
+                var response = servicioBdService.ConsultarTodos(comboBox1.Text, laboratorio.IdLaboratorios);
+                PintarConLaboratorio(response.servicios, laboratorio);
+                
             }
         }
-        
-        public Ips ObtenerIps()
+        public void PintarConLaboratorio(List<Servicio> listaConsulta,Laboratorio laboratorio) {
+            foreach (var item in listaConsulta)
+            {
+                Ips ips = ObtenerIps(item.IdIPS);
+                int n = dataGridView1.Rows.Add();
+                dataGridView1.Rows[n].Cells[0].Value = ips.IdIPS;
+                dataGridView1.Rows[n].Cells[1].Value = ips.NombreIPS;
+                dataGridView1.Rows[n].Cells[2].Value = item.Identificacion;
+                dataGridView1.Rows[n].Cells[3].Value = item.NombrePaciente;
+                dataGridView1.Rows[n].Cells[4].Value = laboratorio.IdLaboratorios;
+                dataGridView1.Rows[n].Cells[5].Value = laboratorio.NombreLaboratorios;
+                dataGridView1.Rows[n].Cells[6].Value = item.ValorLaboratorio;
+            }
+
+        }
+        public void PintarConIps(List<Servicio> listaConsulta, Ips ips)
         {
-            foreach (var item in listaIps) {
-                if (comboBox1.Text.Equals(item.IdIPS)) {
+            foreach (var item in listaConsulta)
+            {
+                Laboratorio laboratorio = ObtenerLaboratorio(item.IdLaboratorio);
+                int n = dataGridView1.Rows.Add();
+                dataGridView1.Rows[n].Cells[0].Value = ips.IdIPS;
+                dataGridView1.Rows[n].Cells[1].Value = ips.NombreIPS;
+                dataGridView1.Rows[n].Cells[2].Value = item.Identificacion;
+                dataGridView1.Rows[n].Cells[3].Value = item.NombrePaciente;
+                dataGridView1.Rows[n].Cells[4].Value = laboratorio.IdLaboratorios;
+                dataGridView1.Rows[n].Cells[5].Value = laboratorio.NombreLaboratorios;
+                dataGridView1.Rows[n].Cells[6].Value = item.ValorLaboratorio;
+            }
+
+        }
+        public Ips ObtenerIps(string id)
+        {
+            foreach (var item in listaIps)
+            {
+                if (id.Equals(item.IdIPS))
+                {
                     return item;
                 }
             }
             return null;
         }
-        public Laboratorio ObtenerLaboratorio(string id)
+        public Ips ObtenerIps()
+        {
+            foreach (var item in listaIps) {
+                if (comboBox1.Text.Equals(item.NombreIPS)) {
+                    return item;
+                }
+            }
+            return null;
+        }
+        public Laboratorio ObtenerLaboratorio()
+        {
+            foreach (var item in listaLaboratorio)
+            {
+                if (comboBox1.Text.Equals(item.NombreLaboratorios))
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+        public Laboratorio ObtenerLaboratorio(String id)
         {
             foreach (var item in listaLaboratorio)
             {

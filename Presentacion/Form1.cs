@@ -130,7 +130,7 @@ namespace Presentacion
             {
                 if (ValorLaboratorio(item.IdLaboratorio, item.ValorLaboratorio))
                 {
-                     servicioBdService.GuardarServicio(item);
+                    servicioBdService.GuardarServicio(item);
                     contadorOk++;
                 }
                 else {

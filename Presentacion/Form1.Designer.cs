@@ -67,7 +67,7 @@
             this.ComboIps.FormattingEnabled = true;
             this.ComboIps.Location = new System.Drawing.Point(151, 36);
             this.ComboIps.Name = "ComboIps";
-            this.ComboIps.Size = new System.Drawing.Size(121, 21);
+            this.ComboIps.Size = new System.Drawing.Size(164, 21);
             this.ComboIps.TabIndex = 6;
             // 
             // dataGridView1
